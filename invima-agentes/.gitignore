@@ -1,0 +1,28 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Nunca versionar: puede contener respuestas de APIs externas
+data/cache/
+# Fixtures generados: se reproducen con tools/generar_dossier_sintetico.py
+data/fixtures/
+# Los folios de demo SI se versionan: son el dossier oficial del evento
+!data/demo/
+# Salidas de corridas
+data/expedientes.db
+data/auditoria.jsonl
+# Folios cargados por la API y carpetas de dossier que arma al radicar
+data/cargas/
+data/dossieres/
+salidas/
+
+.env
+.env.*
+# La plantilla si se versiona: no lleva secretos
+!.env.ejemplo
+.gstack/

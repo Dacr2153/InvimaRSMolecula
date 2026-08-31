@@ -1,0 +1,75 @@
+# Sistema de radicacion y evaluacion de Registro Sanitario de Molecula.
+#
+#   docker compose up --build
+#
+#   web  http://localhost:8080   radicacion (solicitante) y evaluacion
+#   api  http://localhost:8001   documentacion viva en /docs
+#   db   localhost:5433          postgres, por si hay que mirar con psql
+#
+# Los puertos publicados evitan a proposito los habituales: la base sale en 5433
+# y no en 5432, y la API en 8001 y no en 8000, para no chocar con un Postgres o
+# un servidor de desarrollo que ya esten corriendo en la maquina.
+
+name: invima-rsmolecula
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: invima
+      POSTGRES_PASSWORD: invima
+      POSTGRES_DB: rsmolecula
+      # Español de Colombia para que los ordenamientos de texto no sorprendan.
+      LANG: es_CO.utf8
+    ports:
+      - "5433:5432"
+    volumes:
+      - datos_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U invima -d rsmolecula"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      INVIMA_DSN: postgresql://invima:invima@db:5432/rsmolecula
+      INVIMA_DATOS: /datos
+      # 0 = el agente extrae con Gemini de verdad (consume credito de GCP).
+      # 1 = extractor determinista, sin red y sin costo, para iterar o si el
+      #     credito se agota en mitad del evento.
+      INVIMA_OFFLINE: "${INVIMA_OFFLINE:-0}"
+      # Precarga el borrador con el dossier oficial de Corazilimab.
+      # Poner en 0 para que la solicitud nazca vacia.
+      INVIMA_DEMO: "1"
+      INVIMA_DEMO_FOLIOS: /demo
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+    volumes:
+      # Los folios radicados sobreviven al contenedor: son el expediente.
+      - datos_expedientes:/datos
+      # Folios del dossier oficial que alimentan el borrador de demostracion.
+      - ./data/demo:/demo:ro
+    ports:
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  datos_postgres:
+  datos_expedientes:

@@ -1,0 +1,31 @@
+dci,norma,forma_farmaceutica,indicacion
+Metformina,7.1.0.0.N10,Tableta,Diabetes mellitus tipo 2
+Losartan,7.3.0.0.N20,Tableta,Hipertension arterial
+Atorvastatina,8.1.0.0.N30,Tableta,Hipercolesterolemia
+Amoxicilina,4.1.1.0.N12,Capsula,Infecciones bacterianas
+Ibuprofeno,19.2.0.0.N04,Tableta,Dolor e inflamacion
+Acetaminofen,19.1.0.0.N02,Tableta,Dolor y fiebre
+Omeprazol,11.2.0.0.N08,Capsula,Enfermedad acido peptica
+Enalapril,7.3.0.0.N11,Tableta,Hipertension arterial
+Salbutamol,16.1.0.0.N05,Inhalador,Asma bronquial
+Levotiroxina,10.1.0.0.N03,Tableta,Hipotiroidismo
+Warfarina,12.1.0.0.N07,Tableta,Anticoagulacion
+Insulina glargina,10.2.0.0.N14,Solucion inyectable,Diabetes mellitus
+Amlodipino,7.3.0.0.N22,Tableta,Hipertension arterial
+Sertralina,21.3.0.0.N09,Tableta,Trastorno depresivo mayor
+Clopidogrel,12.2.0.0.N15,Tableta,Prevencion de eventos aterotromboticos
+Ceftriaxona,4.1.2.0.N18,Polvo para inyeccion,Infecciones bacterianas graves
+Prednisolona,10.3.0.0.N06,Tableta,Procesos inflamatorios
+Furosemida,7.2.0.0.N13,Tableta,Edema e hipertension
+Metotrexato,6.2.0.0.N21,Tableta,Artritis reumatoide
+Adalimumab,6.3.0.0.N45,Solucion inyectable,Artritis reumatoide
+Rituximab,6.3.0.0.N46,Solucion para infusion,Linfoma no Hodgkin
+Trastuzumab,6.3.0.0.N47,Polvo para infusion,Cancer de mama HER2 positivo
+Bosentan,7.4.0.0.N33,Tableta,Hipertension arterial pulmonar
+Sildenafil,7.4.0.0.N34,Tableta,Hipertension arterial pulmonar
+Ambrisentan,7.4.0.0.N35,Tableta,Hipertension arterial pulmonar
+Tadalafilo,7.4.0.0.N36,Tableta,Hipertension arterial pulmonar
+Rivaroxaban,12.1.0.0.N28,Tableta,Anticoagulacion
+Apixaban,12.1.0.0.N29,Tableta,Anticoagulacion
+Empagliflozina,10.1.0.0.N40,Tableta,Diabetes mellitus tipo 2
+Dapagliflozina,10.1.0.0.N41,Tableta,Diabetes mellitus tipo 2

@@ -1,0 +1,31 @@
+FROM python:3.12-slim
+
+# Docling y compania no entran en la imagen de la API: el modo offline usa los
+# adaptadores deterministas. Instalar solo el extra `api` mantiene la imagen
+# chica y el arranque rapido, que es lo que importa para demostrar en vivo.
+
+WORKDIR /app
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml README.md ./
+COPY src ./src
+RUN pip install --no-cache-dir -e '.[api,gemini]'
+
+# Datos de referencia que leen los motores puros del A1 (tarifas, transacciones,
+# normas farmacologicas). Viajan en la imagen pero el A1 los busca bajo
+# INVIMA_DATOS, que es un volumen: el entrypoint los siembra ahi al arrancar.
+COPY data/referencia /opt/invima/referencia
+COPY infra/postgres ./infra/postgres
+COPY infra/entrypoint-api.sh /usr/local/bin/entrypoint-api.sh
+
+ENV PYTHONUNBUFFERED=1 \
+    INVIMA_DATOS=/datos \
+    INVIMA_OFFLINE=1
+
+EXPOSE 8000
+
+ENTRYPOINT ["/usr/local/bin/entrypoint-api.sh"]
+CMD ["uvicorn", "invima_api.main:app", "--host", "0.0.0.0", "--port", "8000"]
